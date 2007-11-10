@@ -1,0 +1,58 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2060
+
+Many IDEs make it easy to organise source files into projects. Some IDEs then make it easy to organise projects into workspaces which can be explored. This is very useful for related projects where one may be an executable and another a required library. Code::Blocks is a very good examples of such an IDE. This is a feature that this plugin attempts to mimic inside the vim plugin winmanager. winmanager makes it incredibly easy to write such plugins (although the availability of an  example would be much appreciated).
+
+There are however major differences between what this plugin attempts to achieve and what the workspace/solution explorers in other IDEs give you. Classic IDE project explorers also give you access to build options and 'project settings', essentially configurations that would normally be within the scope of a makefile. winworkspaceexlporer does not attempt to do the this. It would not be appropriate. Most people coding with vim would probably be using 'make' or one of its many variants or replacements ( I use Scons ). It is more natural to edit the equivalent of the makefile directly in vim. Adding, deleting files to a project does not need to be supported in a plugin like this as these changes would be carried out directly in the makefile-like file. Whilst I do not require IDE workspace-explorer capabilities to set project options, compiler flags , link flags etc, I did have a need for a workspace-explorer-like plugin for vim that would simply let me explore the project files and organise them conveniently, hence winwkspaceexplorer.
+
+The preferred way to generate the winwkspaceexplorer PROJECT files would be as additional targets in the makefile. I use SCons ( replacement for make)  and on Windows the project file for a popular  IDE gets created on the fly during the build process by code in the sconscript file ( Scons version of a makefile)(Scons actualy has this feature builtin). Similarly on Linux and Cygwin a winwkspaceexplorer project file is generated on the fly by the same sconscript file.
+
+There are alternatives such as the script found at  http://www.vim.org/scripts/script.php?script_id=69. This is a very good plugin and definitely worth trying out. However I needed something that I could use with the winmanager, which is my first choice for the foundation of a very good IDE.  
+
+This plugin is in early stages but, for me very useable. There are many more things that can be added easily. I am however keen to keep the plugin minimalist and most importantly do not want to duplicate any functionality  between winwkspaceexplorer and the makefile. 
+
+
+
+Please send any comments, suggestions,  or bugs to narinder_claireATyahoo.co.uk
+
+[NOTE]:  There are 2 entries for the winmanager plugin on vim.org. The original :
+                              http://www.vim.org/scripts/script.php?script_id=95
+               and its descendant 
+                              http://www.vim.org/scripts/script.php?script_id=1440
+               I use the latter as its a continuation of the first and contains bugfixes.
+               To understand why there are two entries read the notes for the latter.
+
+ 
+
+================================================
+CHANGE LOG
+================================================
+02/11/2007 initial upload
+------------------------------------------------------------------------------------------------------------------
+03/11/2007 Feature: Added folding for Workspace explorer window. Syntax highlighting added to make the Workspace Explorer window nicer to use.
+------------------------------------------------------------------------------------------------------------------
+04/11/2007 Bug Fix: While you had a workspace loaded  then a change to any of the project files
+would NOT force an update of the workspace explorer on the next window refresh. This has now been fixed. What hasn't been 'fixed' is that you need to press CTRL-W a few times  to force the workspace window to refresh.
+---------------------------------------------------------------------------------------------------------------------
+05/11/2007 Feature Tweak: Selecting a file in the workspace explorer and pressing <CR>,<TAB> or double-clicking to edit the file only worked in normal mode, now it also works in insert mode too. 
+I just don't want to keep pressing <Esc> and THEN select a new file to edit , I prefer to just select and edit. 
+----------------------------------------------------------------------------------------------------------------------
+10/11/2007 Feature Tweak (v0.32): It was a bit annoying that files displayed in the workspace were displayed in a random order. This has been fixed, now they are displayed in alphabetic order ( almost , uppercase takes precendant over lower case so 'Z' before 'a').            
+Bug Fix (v0.33):Every time there was a change to any of the modification times of any of the projects in the workspace, everything in the workspace window would get folded up. This was really annoying as my makefile creates a project file on the fly and every time make was run everything would get folded up. This has now been fixed.                                                         
+----------------------------------------------------------------------------------------------------------------------- 
+12/11/07 Bug FIx : Files failed to open for edit if they were in the same directory as the workspace file and project file , and the the cwd was not the directory containing the workspace file.
+-----------------------------------------------------------------------------------------------------------------------  
+24/04/08 v0.33.2 Minor Bug fix. Thanks to Wang Danqi for the bug report 
+         and bug fix. The following is an extract from the report.
+         "..when I installed the script in my vim plugin directory and
+         launch winmanager, I got a error report. Finally I found the
+         error was occured by line 90 in winwkspaceexplorer.vim, in 
+             function! WKSpaceExplorer_Start():
+               call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r")i.g:wksExtension)
+         I changed it to 
+               call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r").g:wksExtension)
+         by delete the character 'i' and it now works smothly." - Wang Danqi
+
+-----------------------------------------------------------------------------------------------------------------------  
+
+
+

@@ -1,0 +1,211 @@
+*winwkspaceexplorer.txt*  
+
+Plugin for winmanager.vim  for a workspace explorer of projects.
+
+VERSION: 0.33
+=============
+
+DESCRIPTION:
+============
+
+Many IDEs make it easy to organise source files into projects. Some IDEs then
+make it easy to organise projects into a workspace which can be explored. This
+is very useful for related projects where one may be an executable and another
+a required library. MSVS and Code::Blocks are very good examples of such
+IDEs. This is a feature that this plugin attempts to mimic inside the vim
+plugin winmanager. winmanager makes it incredibly easy to write such plugins (
+although the availibility of an  example would be much apprieciated).
+
+There are however major differences between what this plugin attempts to
+achieve and what the workspace/solution explorers in other IDEs give you.
+Classic IDE project explorers also give you access to build options and
+'project settings', essentialy configurations what would double for a makefile.
+winworkspaceexlporer does not attempt to do the latter. It would not be
+appropriate. Most people coding with vim would probably be using make or one of
+its many variants or replacements ( I use Scons ). It is more natural to edit
+the equivlent of the makefile directly in vim. Adding, deleting files to a
+project does not need to be supported in a plugin like this as these changes
+would be carried out directly in the makefile-like file.
+On the other hand I have felt a need for a workspace-explorer-like plugin for
+vim. 
+
+This is a plugin in VERY early stages but useable. There are manymore things
+that can be easily added. Since it is my first ever vim script the code may not
+be the most elegant.
+
+
+
+
+INSTALL:
+========
+
+The plugin winmanager needs to be installed, The required version is 2.34 and is available
+for download from  http://www.vim.org/scripts.
+To install winworkspaceexplorer just unzip winwksexplorer.zip into ~/.vim or
+where ever the plugins are located
+
+
+
+
+USE:
+====
+
+Each project is represented by a file  project.vimprj
+which lists all the files on the project. The filenames are given as relative
+paths, relative to the project file.
+
+---------- project.vimprj ---------------
+
+main.cpp
+function.cpp
+function.h
+utils/utils.cpp
+utils/utils.h
+
+
+-----------------------------------------
+
+
+
+The project file may have filters (sections) to divided up the files. These
+help divided all the files out in groups. The begining of a filter group is
+marked woth the filter name enclosed in <>
+
+
+
+---------- project.vimprj ---------------
+<makefiles>
+Makefile
+<source>
+main.cpp
+function.cpp
+utils/utils.cpp
+<headers>
+function.h
+utils/utils.h
+
+-----------------------------------------
+
+This file should NOT have to be constructed manualy. This would be repeating
+work that has already been done elsewhere. Your makefile ( Makefile, Sconstruct
+) is alread aware of all the files in your project(s). The build process itself
+should construct the project files on the fly.
+
+
+The Workspace file lists all the projects in the workspace. It makes much more
+sense to construct this by hand since you can choose to put in the current
+projects you are working wth. The relative ( to the directory with the
+workspace file) path names of the project files are simply listed in the
+workspace file.
+
+------ workspace.vimwks -----------
+
+MyProjects/project1/project1.vimprj
+MyProjects/project2/project2.vimprj
+
+-----------------------------------
+
+To open up a workspace enter vim then use the command 'WKSpace'
+as
+  :WKSpace Mywork.vimwks
+
+
+To fold project or filter sections in the window either prees <CR> or
+double-click on the project name <projname> or filtername |filter|
+
+COLOURS:
+Syntax colouring is used to display the Workspace, Project filters and
+filenames in different colours. The colours are taken from existing
+syntax highlighting. By default: 
+
+  Workspace is highligted as Directory
+  Project as String
+  Filter as Type
+  File as Keyword
+
+
+You can however select you own colours simply by adding the
+following lines to you .vimrc file
+
+                let g:WorkspaceExplorerColours = {}
+		let g:WorkspaceExplorerColours["Worksapce"] = "Directory"
+		let g:WorkspaceExplorerColours["Project"] = "String"
+		let g:WorkspaceExplorerColours["Filter"] = "Type"
+		let g:WorkspaceExplorerColours["File"] = "Keyword"
+
+and changing "Directory", "String","Type" and "Keyword" to a selection
+of your own.
+
+TODO:
+=====
+
+LOTS OF THINGS !!
+
+but one is ..
+
+1. To add commands that would add and remove projects to the workspace 
+
+
+========
+
+Narinder Claire 2007 
+narinder_claireATyahoo.co.uk
+
+
+
+
+
+
+
+========================================================================
+==============    CHANGE LOG
+
+02/11/07 ver 0.1 Initial Release on wim.org
+03/11/07 ver 0.2 Added folding 
+03/11/07 ver 0.3 Added syntax highlighting
+04/11/07 ver 0.31 Bug FIx: If a project file was changed the workspace
+         would not be refreshedas it was not being re-read. Now it does.
+05/11/07 Slecting a file and pressing <CR>,<TAB> or double-clicking to
+         edit the file only worked in normal mode, but now it also works
+         in insert mode too.
+10/11/07 Files in the project explorer are now diplayed in alphebetical
+         order( but uppercase takes precendant over lowercase, I don't
+         really have a problem with this)
+10/11/07 Everytime there was a change to any of the modification times
+         of any of the projects in the workspace, everything in the
+         workspace window would get folded up. This was really annoying
+         as my makefile creates a project file on the fly and everytime
+         make was run everything would get folded up. This has now been
+         fixed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

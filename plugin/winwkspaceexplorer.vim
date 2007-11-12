@@ -1,17 +1,27 @@
 "=============================================================================
-"        File: winwkspaceexplorer.vim
-"      Author: Narinder Claire (narinder_claireATyahoo.co.uk)
-" Last Change: 10/11/2007  ver 0.33
-"        Help: winwkspaceexplorer.vim is a plugin which helps to organise a
-"              group of projects in a workspace rather like on MSVS 
+"    Copyright: Copyright (C) 2007 Narinder Claire
+"               Permission is hereby granted to use and distribute this code,
+"               with or without modifications, provided that this copyright
+"               notice is copied with it. Like anything else that's free,
+"               winwkspaceexplorer.vim is provided *as is* and comes with no
+"               warranty of any kind, either expressed or implied. In no
+"               event will the copyright holder be liable for any damages
+"               resulting from the use of this software.
+" Name Of File: winwkspaceexplorer.vim
+"  Description: Workspace Explorer Vim Plugin (Plugin for winamanager)
+"               winwkspaceexplorer.vim is a plugin which helps to organise a
+"               group of projects in a workspace rather like IDEs 
+"   Maintainer: Narinder Claire   : narinder_claire AT yahoo.co.uk
+" Last Changed: Monday 12 Nov 2007
+"      Version: 0.33.1
+"        Usage: This file should reside in the plugins directory and be 
+"               automatically sourced. It has a dependency on the plugin 
+"               winmanager which should be installed
 "
 "
-" NOTE:  This plugin requires alot more work, there is no help for a start
-"
-" ============================================================================
-
-
-
+"               For more help see supplied documentation.
+"      History: See supplied documentation.
+"=============================================================================
 
 
 " Has this already been loaded?
@@ -547,18 +557,30 @@ function! <SID>EditEntry(split)
   "Lets get rid of the angualr brackets from the project name
   let l:projName = split(getline(l:lnumber),'[<> ]')[0]
   
+  "OK for bug fix  v0.33->0.33.1 this line has moved from  the line marked
+                                  "****** BBBBBBugfix 0.33.1 to here
+  exe "cd ".s:wksDirectory
+  " we put the line above so it comes before setting l:projectPath
+  " because if the filename we using with fnamemodify is not preappended by a
+  " relative path l:projectpath automaticaly defaults to cwd, this caused
+  " problems
+
   " and get the project path
   let l:projectPath = fnamemodify(s:wksDict[l:projName]['filename'],':p:h')
 
   "Lets cd to the workspace path from ther cd to the project path sice project
   "paths are relative to the workspace path
-  exe "cd ".s:wksDirectory
+                                  "****** BBBBBBugfix 0.33.1 here 
   exe "cd ".l:projectPath
-
   "lets get the relative pathnamne of the file we are interestd in , it is
   "relative to the project file path hdenc we cd'd here 
   let l:fileName = s:wksDict[l:projName]['filters'][l:filter]['files'][l:file]
-
+  " follwing three line are for debugging only
+  "echo s:wksDirectory
+  "echo l:projectPath
+  "echo l:fileName
+  
+  
   " better be readable
   if filereadable(l:fileName)
     call WinManagerFileEdit(l:fileName ,a:split)

@@ -2,7 +2,7 @@
 
 Plugin for winmanager.vim  for a workspace explorer of projects.
 
-VERSION: 0.33
+VERSION: 0.33.1
 =============
 
 DESCRIPTION:
@@ -177,7 +177,10 @@ narinder_claireATyahoo.co.uk
          as my makefile creates a project file on the fly and everytime
          make was run everything would get folded up. This has now been
          fixed
-
+12/11/07 v0.33.1 Minor Bug fix. If the cwd was not the same as the 
+         directory containing the .vimwks file and there  was a .vimprj
+         file in that same directory then files that were also in the 
+         cwd would not open. Now fixed.
 
 
 

@@ -2,7 +2,7 @@
 
 Plugin for winmanager.vim  for a workspace explorer of projects.
 
-VERSION: 0.33.1
+VERSION: 0.33.2
 =============
 
 DESCRIPTION:
@@ -148,7 +148,7 @@ but one is ..
 
 ========
 
-Narinder Claire 2007 
+Narinder Claire 2008 
 narinder_claireATyahoo.co.uk
 
 
@@ -181,6 +181,19 @@ narinder_claireATyahoo.co.uk
          directory containing the .vimwks file and there  was a .vimprj
          file in that same directory then files that were also in the 
          cwd would not open. Now fixed.
+24/04/08 v0.33.2 Minor Bug fix. Thanks to Wang Danqi for the bug report 
+         and bug fix. The following is an extract from the report.
+
+         "..when I installed the script in my vim plugin directory and
+         launch winmanager, I got a error report. Finally I found the
+         error was occured by line 90 in winwkspaceexplorer.vim, in 
+             function! WKSpaceExplorer_Start():
+               call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r")i.g:wksExtension)
+         I changed it to 
+               call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r").g:wksExtension)
+         by delete the character 'i' and it now works smothly." - Wang Danqi
+
+
 
 
 

@@ -12,8 +12,8 @@
 "               winwkspaceexplorer.vim is a plugin which helps to organise a
 "               group of projects in a workspace rather like IDEs 
 "   Maintainer: Narinder Claire   : narinder_claire AT yahoo.co.uk
-" Last Changed: Monday 12 Nov 2007
-"      Version: 0.33.1
+" Last Changed: Thursday 24th April 2008 
+"      Version: 0.33.2
 "        Usage: This file should reside in the plugins directory and be 
 "               automatically sourced. It has a dependency on the plugin 
 "               winmanager which should be installed
@@ -87,7 +87,7 @@ function! WKSpaceExplorer_Start()
 		 		 call s:EditWKS(s:pathname)
 		 else
                                  let s:dirtyFlag = 1 
-		 		 call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r")i.g:wksExtension)
+		 		 call s:EditWKS(getcwd()."/".fnamemodify(getcwd(),":t:r").g:wksExtension)
 		 endif
 		 if exists('s:lastCursorRow')
 		 		 exe s:lastCursorRow
